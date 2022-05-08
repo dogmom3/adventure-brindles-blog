@@ -17,21 +17,9 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    post_url: {
+    content: {
       type: DataTypes.STRING,
       allowNull: false,
-      foo: {
-        type: sequelize.STRING,
-        validate: {
-          isURL: [
-            {
-              msg: "foo must be a URL with https protocol.",
-              protocols: ["https"],
-              require_protocol: true,
-            },
-          ],
-        },
-      },
     },
     user_id: {
       type: DataTypes.INTEGER,

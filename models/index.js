@@ -10,18 +10,18 @@ Post.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-//many-to-many association
-User.belongsToMany(Post, {
-    through: Comment,
-    as: 'commented_posts',
-    foreignKey: 'user_id'
-  });
+//many-to-many association //NOT SURE IF I NEED THIS SECTION//
+// User.belongsToMany(Post, {
+//     through: Comment,
+//     as: 'commented_posts',
+//     foreignKey: 'user_id'
+//   });
   
-  Post.belongsToMany(User, {
-    through: Comment,
-    as: 'commented_posts',
-    foreignKey: 'post_id'
-  });
+//   Post.belongsToMany(User, {
+//     through: Comment,
+//     as: 'commented_posts',
+//     foreignKey: 'post_id'
+//   });
 
   //one-to-many user vote associations
   Comment.belongsTo(User, {
