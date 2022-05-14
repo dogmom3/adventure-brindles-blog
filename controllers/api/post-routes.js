@@ -6,31 +6,35 @@ const sequelize = require("../../config/connection");
 router.get("/", (req, res) => {
   Post.findAll({
     order: [["created_at", "DESC"]],
-    attributes: ["id", "post_url", "title", "created_at",
-    [
-      sequelize.literal(
-        "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
-      ),
-      "like_count",
+    attributes: [
+      "id",
+      "post_url",
+      "title",
+      "created_at",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM likes WHERE post.id = likes.post_id)"
+        ),
+        "like_count",
+      ],
     ],
-  ],
     include: [
       {
         model: Comment,
-        attributes:["id", "comment_text", "post_id", "user_id", "created_at"],
+        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
         include: {
           model: User,
           attributes: ["username"],
         },
       },
-      // {
-      //   model: User,
-      //   attributes: ["username"],
-      // },
-      // {
-      //   model: User,
-      //   attributes: ["username"],
-      // },
+    {
+      model: User,
+      attributes: ["username"],
+    },
+    {
+      model: User,
+      attributes: ["username"],
+    },
     ],
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -46,21 +50,19 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["id", "post_url", "title", "created_at",
-    [
-      sequelize.literal(
-        "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
-      ),
-      "like_count",
+    attributes: [
+      "id",
+      "post_url",
+      "title",
+      "created_at",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
+        ),
+        "like_count",
+      ],
     ],
-  ],
-    include: [
-      {
-        model: User,
-        attributes: ["username"],
-      },
-    ],
-    //includes all comments on a post
+    // includes all comments on a post
     include: [
       {
         model: Comment,
@@ -69,10 +71,6 @@ router.get("/:id", (req, res) => {
           model: User,
           attributes: ["username"],
         },
-      },
-      {
-        model: User,
-        attributes: ["username"],
       },
       {
         model: User,
@@ -107,7 +105,7 @@ router.post("/", (req, res) => {
     });
 });
 
-/ PUT /api/posts/upvote
+// /PUT /api/posts/upvote
 router.put("/upvote", (req, res) => {
   // custom static method created in models/Post.js
   Post.upvote(req.body, { Like })

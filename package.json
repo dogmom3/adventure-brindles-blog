@@ -12,7 +12,8 @@
     "sequelize": "^6.19.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "nodemon server.js"
   },
   "name": "blog",
   "version": "1.0.0",
