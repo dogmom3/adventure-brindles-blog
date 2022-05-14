@@ -1,17 +1,36 @@
 const router = require("express").Router();
-const { Post, User, Comment } = require("../../models");
+const { Post, User, Like, Comment } = require("../../models");
 const sequelize = require("../../config/connection");
 
-//get all users
+//get all posts
 router.get("/", (req, res) => {
   Post.findAll({
-    attributes: ["id", "post_url", "title", "created_at"],
     order: [["created_at", "DESC"]],
+    attributes: ["id", "post_url", "title", "created_at",
+    [
+      sequelize.literal(
+        "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
+      ),
+      "like_count",
+    ],
+  ],
     include: [
       {
-        model: User,
-        attributes: ["username"],
+        model: Comment,
+        attributes:["id", "comment_text", "post_id", "user_id", "created_at"],
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
       },
+      // {
+      //   model: User,
+      //   attributes: ["username"],
+      // },
+      // {
+      //   model: User,
+      //   attributes: ["username"],
+      // },
     ],
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -27,8 +46,34 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["id", "post_url", "title", "created_at"],
+    attributes: ["id", "post_url", "title", "created_at",
+    [
+      sequelize.literal(
+        "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
+      ),
+      "like_count",
+    ],
+  ],
     include: [
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
+    //includes all comments on a post
+    include: [
+      {
+        model: Comment,
+        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
+      },
+      {
+        model: User,
+        attributes: ["username"],
+      },
       {
         model: User,
         attributes: ["username"],
@@ -62,32 +107,15 @@ router.post("/", (req, res) => {
     });
 });
 
-// PUT /api/posts
-router.put("/comment", (req, res) => {
-
-  // create the comment
-  Comment.create({
-    user_id: req.body.user_id,
-    post_id: req.body.post_id,
-  }).then(() => {
-    // then find the post we just commented
-    return Post.findOne({
-      where: {
-        id: req.body.post_id,
-      },
-      attributes: [
-        "id",
-        "post_url",
-        "title",
-        "created_at",
-      ],
-    })
-      .then((dbPostData) => res.json(dbPostData))
-      .catch((err) => {
-        console.log(err);
-        res.status(400).json(err);
-      });
-  });
+/ PUT /api/posts/upvote
+router.put("/upvote", (req, res) => {
+  // custom static method created in models/Post.js
+  Post.upvote(req.body, { Like })
+    .then((updatedPostData) => res.json(updatedPostData))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
 
 //updates existing post

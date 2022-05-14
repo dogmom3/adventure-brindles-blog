@@ -23,17 +23,14 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    //MAYBE DON'T NEED THIS SECTION
-    // email: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   //there cannot be any duplicate email values in this table
-    //   unique: true,
-    //   //if allowNull is set to false, run data through validators before creating table data
-    //   validate: {
-    //     isEmail: true,
-    //   },
-    // },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -1,2 +1,2 @@
- drop database if exists adventure_brindles_blog;
-create database adventure_brindles_blog;
+DROP DATABASE IF EXISTS adventure_brindles_blog;
+CREATE DATABASE adventure_brindles_blog;

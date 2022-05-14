@@ -2,7 +2,30 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
 // create our Post model
-class Post extends Model {}
+class Post extends Model {
+  static upvote(body, models) {
+    return models.Like.create({
+      user_id: body.user_id,
+      post_id: body.post_id,
+    }).then(() => {
+      return Post.findOne({
+        where: {
+          id: body.post_id,
+        },
+        attributes: [
+          "id",
+          "post_url",
+          "title",
+          "created_at",
+          [
+            sequelize.literal("(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"),
+            "like_count",
+          ],
+        ],
+      });
+    });
+  }
+}
 
 // create fields/columns for Post model
 Post.init(
@@ -17,9 +40,21 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    content: {
+    post_url: {
       type: DataTypes.STRING,
       allowNull: false,
+      foo: {
+        type: sequelize.STRING,
+        validate: {
+          isURL: [
+            {
+              msg: "foo must be a URL with https protocol.",
+              protocols: ["https"],
+              require_protocol: true,
+            },
+          ],
+        },
+      },
     },
     user_id: {
       type: DataTypes.INTEGER,
