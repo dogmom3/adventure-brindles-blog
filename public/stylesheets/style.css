@@ -1,19 +1,21 @@
 * {
     box-sizing: border-box;
-    background-image: linear-gradient(orchid, cyan, goldenrod );
+    
   }
   
   body, html {
     height: 100%;
     padding: 0;
     margin: 0;
-    font-family:cursive;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: black;
+    background-image: radial-gradient(yellow, goldenrod, magenta)
   }
-  
+
+
   a {
     text-decoration: none;
-    color: #225ca3;
+    color: rebeccapurple;
     font-weight: bold;
     transition: color .1s;
   }
