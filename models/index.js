@@ -1,6 +1,6 @@
 const User = require('./User');
 const Post = require('./Post');
-const Like = require('./Like');
+const Paws = require('./Paws');
 const Comment = require('./Comment');
 
 //create associations
@@ -11,29 +11,29 @@ Post.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-// many-to-many association 
+//many-to-many association
 User.belongsToMany(Post, {
-    through: Like,
-    as: 'liked_posts',
+    through: Paws,
+    as: 'pawed_posts',
     foreignKey: 'user_id'
   });
   Post.belongsToMany(User, {
-    through: Like,
-    as: 'liked_posts',
+    through: Paws,
+    as: 'pawed_posts',
     foreignKey: 'post_id'
   });
 
   //one-to-many user vote associations
-  Like.belongsTo(User, {
+  Paws.belongsTo(User, {
     foreignKey: 'user_id'
   });
-  Like.belongsTo(Post, {
+  Paws.belongsTo(Post, {
     foreignKey: 'post_id'
   });
-  User.hasMany(Like, {
+  User.hasMany(Paws, {
     foreignKey: 'user_id'
   });
-  Post.hasMany(Like, {
+  Post.hasMany(Paws, {
     foreignKey: 'post_id'
   });
 
@@ -51,4 +51,4 @@ User.belongsToMany(Post, {
     foreignKey: 'post_id'
   });
 
-module.exports = { User, Post, Like, Comment };
+module.exports = { User, Post, Paws, Comment };

@@ -11,9 +11,9 @@ router.get("/", (req, res) => {
       "created_at",
       [
         sequelize.literal(
-          "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
+          "(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)"
         ),
-        "like_count",
+        "paws_count",
       ],
     ],
     include: [

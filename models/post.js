@@ -4,26 +4,24 @@ const sequelize = require("../config/connection");
 // create our Post model
 class Post extends Model {
   static upvote(body, models) {
-    return models.Like.create({
+    return models.Paws.create({
       user_id: body.user_id,
-      post_id: body.post_id,
+      post_id: body.post_id
     }).then(() => {
       return Post.findOne({
         where: {
-          id: body.post_id,
+          id: body.post_id
         },
         attributes: [
-          "id",
-          "post_url",
-          "title",
-          "created_at",
+          'id',
+          'post_url',
+          'title',
+          'created_at',
           [
-            sequelize.literal(
-              "(SELECT COUNT(*) FROM likes WHERE post.id = likes.post_id)"
-            ),
-            "like_count",
-          ],
-        ],
+            sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'),
+            'paws_count'
+          ]
+        ]
       });
     });
   }

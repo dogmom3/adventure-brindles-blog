@@ -14,7 +14,6 @@
   * [Screenshots](#screenshots)
 
  
-  
   ## Usage
 Visit the website at the link below, sign up for an accoun, and begin posting and viewing blogs.
 
@@ -27,8 +26,6 @@ Visit the website at the link below, sign up for an accoun, and begin posting an
   My name is Blair Seivers and I can be reached for any questions on this project by email at
   blair.seivers@gmail.com </br>
   You can view my other projects on GitHub here: https://github.com/dogmom3
-
-  
   
   ## Screenshots
  

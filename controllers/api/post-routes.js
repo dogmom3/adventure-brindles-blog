@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post, User, Like, Comment } = require("../../models");
+const { Post, User, Paws, Comment } = require("../../models");
 const sequelize = require("../../config/connection");
 
 //get all posts
@@ -11,13 +11,15 @@ router.get("/", (req, res) => {
       "post_url",
       "title",
       "created_at",
+      //includes total vote count for a post
       [
         sequelize.literal(
-          "(SELECT COUNT(*) FROM likes WHERE post.id = likes.post_id)"
+          "(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)"
         ),
-        "like_count",
+        "paws_count",
       ],
     ],
+//includes all comments on a post
     include: [
       {
         model: Comment,
@@ -27,14 +29,14 @@ router.get("/", (req, res) => {
           attributes: ["username"],
         },
       },
-    {
-      model: User,
-      attributes: ["username"],
-    },
-    {
-      model: User,
-      attributes: ["username"],
-    },
+      {
+        model: User,
+        attributes: ["username"],
+      },
+      {
+        model: User,
+        attributes: ["username"],
+      },
     ],
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -57,12 +59,18 @@ router.get("/:id", (req, res) => {
       "created_at",
       [
         sequelize.literal(
-          "(SELECT COUNT(*) FROM like WHERE post.id = like.post_id)"
+          "(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)"
         ),
-        "like_count",
+        "paws_count",
       ],
     ],
-    // includes all comments on a post
+    include: [
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
+    //includes all comments on a post
     include: [
       {
         model: Comment,
@@ -76,6 +84,10 @@ router.get("/:id", (req, res) => {
         model: User,
         attributes: ["username"],
       },
+      // {
+      //   model: User,
+      //   attributes: ["username"],
+      // },
     ],
   })
     .then((dbPostData) => {
@@ -105,10 +117,10 @@ router.post("/", (req, res) => {
     });
 });
 
-// /PUT /api/posts/upvote
+// PUT /api/posts/upvote
 router.put("/upvote", (req, res) => {
   // custom static method created in models/Post.js
-  Post.upvote(req.body, { Like })
+  Post.upvote(req.body, { Paws })
     .then((updatedPostData) => res.json(updatedPostData))
     .catch((err) => {
       console.log(err);

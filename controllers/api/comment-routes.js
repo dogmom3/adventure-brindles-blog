@@ -3,11 +3,8 @@ const { Comment } = require("../../models");
 
 //route to get comments
 router.get("/", (req, res) => {
-  Comment.findAll({})
-    .then((dbPostData) => {
-      console.log(dbPostData);
-      res.json(dbPostData);
-    })
+  Comment.findAll()
+    .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
