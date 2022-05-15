@@ -5,13 +5,12 @@ const sequelize = require("../../config/connection");
 //get all posts
 router.get("/", (req, res) => {
   Post.findAll({
-    order: [["created_at", "DESC"]],
+    // order: [["created_at", "DESC"]],
     attributes: [
       "id",
       "post_url",
       "title",
       "created_at",
-      //includes total vote count for a post
       [
         sequelize.literal(
           "(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)"
@@ -19,7 +18,6 @@ router.get("/", (req, res) => {
         "paws_count",
       ],
     ],
-//includes all comments on a post
     include: [
       {
         model: Comment,
@@ -27,11 +25,7 @@ router.get("/", (req, res) => {
         include: {
           model: User,
           attributes: ["username"],
-        },
-      },
-      {
-        model: User,
-        attributes: ["username"],
+        }
       },
       {
         model: User,
@@ -66,13 +60,6 @@ router.get("/:id", (req, res) => {
     ],
     include: [
       {
-        model: User,
-        attributes: ["username"],
-      },
-    ],
-    //includes all comments on a post
-    include: [
-      {
         model: Comment,
         attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
         include: {
@@ -84,10 +71,6 @@ router.get("/:id", (req, res) => {
         model: User,
         attributes: ["username"],
       },
-      // {
-      //   model: User,
-      //   attributes: ["username"],
-      // },
     ],
   })
     .then((dbPostData) => {
@@ -155,10 +138,11 @@ router.put("/:id", (req, res) => {
 
 //delete a post
 router.delete("/:id", (req, res) => {
+  console.log('id', regq.parama.id);
   Post.destroy({
     where: {
       id: req.params.id,
-    },
+    }
   })
     .then((dbPostData) => {
       if (!dbPostData) {

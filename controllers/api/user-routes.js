@@ -7,7 +7,6 @@ router.get("/", (req, res) => {
   User.findAll({
     attributes: { exclude: ["password"] },
   })
-
     .then((dbUserData) => res.json(dbUserData))
     .catch((err) => {
       console.log(err);
@@ -18,16 +17,14 @@ router.get("/", (req, res) => {
 // GET /api/users/1 <-- one specific user
 router.get("/:id", (req, res) => {
   User.findOne({
-    attributes: {
-      exclude: ["password"],
-    },
+    attributes: { exclude: ["password"] },
     where: {
       id: req.params.id,
     },
-    //include title info for posts
     include: [
-      { model: Post, attributes: ["id", "title", "post_url", "created_at"] },
-      //include comments
+      { model: Post, 
+        attributes: ["id", "title", "post_url", "created_at"] 
+      },
       {
         model: Comment,
         attributes: ["id", "comment_text", "created_at"],
@@ -40,7 +37,7 @@ router.get("/:id", (req, res) => {
         model: Post,
         attributes: ["title"],
         through: Paws,
-        as: "paw_posts",
+        as: "pawed_posts",
       },
     ],
   })
@@ -72,6 +69,10 @@ router.post("/", (req, res) => {
 
       res.json(dbUserData);
     });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
   });
 });
 
