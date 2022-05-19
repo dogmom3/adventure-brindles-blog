@@ -2,15 +2,14 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 const bcrpyt = require('bcrypt');
 
-//create user model
+//CREATE USER MODEL
 class User extends Model {
-    //set up method to run on instance data (per user) to check password
     checkPassword(loginPw) {
         return bcrpyt.compareSync(loginPw, this.password);
     }
 }
 
-//define table columns and configuration
+//CREATE FIELDS FOR USER MODEL
 User.init(
   {
     id: {
@@ -35,7 +34,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-          // password must be atleast 4 characters long
         len: [4],
       },
     },

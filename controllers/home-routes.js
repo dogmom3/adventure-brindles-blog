@@ -2,6 +2,7 @@ const router = require("express").Router();
 const sequelize = require("../config/connection");
 const { Post, User, Comment, Paws } = require("../models");
 
+//GET ALL POSTS
 router.get("/", (req, res) => {
   console.log(req.session);
   Post.findAll({
@@ -10,8 +11,7 @@ router.get("/", (req, res) => {
       "post_url",
       "title",
       "created_at",
-      [
-        sequelize.literal(
+      [sequelize.literal(
           "(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)"
         ),
         "paws_count",
@@ -47,14 +47,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  res.render("login");
-});
-
+//GET SINGLE POST
 router.get("/post/:id", (req, res) => {
   Post.findOne({
     where: {
@@ -107,4 +100,13 @@ router.get("/post/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
+
+router.get("/login", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+  res.render("login");
+});
+
 module.exports = router;

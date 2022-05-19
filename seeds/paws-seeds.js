@@ -71,6 +71,6 @@ const pawsdata = [
   },
 ];
 
-const seedVotes = () => Paws.bulkCreate(pawsdata);
+const seedPaws = () => Paws.bulkCreate(pawsdata);
 
-module.exports = seedVotes;
+module.exports = seedPaws;
