@@ -1,4 +1,4 @@
-<ol class="post-list">
+{{!-- <ol class="post-list">
     {{#each posts as |post|}}
   <li>
     <ol class="post-list">
@@ -8,6 +8,14 @@
   </li>
   {{/each}}
 </ol>
+  </li>
+  {{/each}}
+</ol> --}}
+
+<ol class="post-list">
+  {{#each posts as |post|}}
+  <li>
+    {{> post-info post }}
   </li>
   {{/each}}
 </ol>
