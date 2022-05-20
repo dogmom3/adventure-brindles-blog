@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-// create our Post model
+//CREATE POST MODEL
 class Post extends Model {
   static upvote(body, models) {
     return models.Paws.create({
@@ -27,7 +27,7 @@ class Post extends Model {
   }
 }
 
-// create fields/columns for Post model
+//CREATE FIELDS FOR POST MODEL
 Post.init(
   {
     id: {
@@ -39,22 +39,14 @@ Post.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      primaryKey: true,
     },
     post_url: {
       type: DataTypes.STRING,
       allowNull: false,
-      foo: {
-        type: sequelize.STRING,
-        validate: {
-          isURL: [
-            {
-              msg: "foo must be a URL with https protocol.",
-              protocols: ["https"],
-              require_protocol: true,
-            },
-          ],
-        },
-      },
+      validate: {
+        isURL: true
+      }
     },
     user_id: {
       type: DataTypes.INTEGER,
