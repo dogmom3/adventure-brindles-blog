@@ -63,6 +63,11 @@ Post.init(
         key: "id",
       },
     },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+   
+    }
   },
   {
     sequelize,
