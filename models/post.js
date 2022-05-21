@@ -17,10 +17,18 @@ class Post extends Model {
           'post_url',
           'title',
           'created_at',
-          [
-            sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'),
-            'paws_count'
-          ]
+          [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'),
+            'paws_count']
+        ],
+        include: [
+          {
+            model: models.Comment,
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+            include: {
+              model: models.User,
+              attributes: ['username']
+            }
+          }
         ]
       });
     });
@@ -39,7 +47,7 @@ Post.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
+      // primaryKey: true,
     },
     post_url: {
       type: DataTypes.STRING,

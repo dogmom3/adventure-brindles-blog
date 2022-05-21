@@ -6,7 +6,7 @@ const withAuth = require('../utils/auth');
 //GET ALL POSTS FOR DASHBOARD
 router.get('/', withAuth, (req, res) => {
   console.log(req.session);
-  console.log('======================');
+  console.log('=====');
   Post.findAll({
     where: {
       user_id: req.session.user_id
@@ -16,7 +16,7 @@ router.get('/', withAuth, (req, res) => {
       'post_url',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'), 'paws_count']
     ],
     include: [
       {
@@ -51,7 +51,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
       'post_url',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'), 'paws_count']
     ],
     include: [
       {
