@@ -3,8 +3,8 @@ const sequelize = require('../config/connection');
 
 //CREATE POST MODEL
 class Post extends Model {
-  static upvote(body, models) {
-    return models.Vote.create({
+  static give_paw(body, models) {
+    return models.Paw.create({
       user_id: body.user_id,
       post_id: body.post_id
     }).then(() => {
@@ -14,10 +14,10 @@ class Post extends Model {
         },
         attributes: [
           'id',
-          'post_url',
+          'content',
           'title',
           'created_at',
-          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+          [sequelize.literal('(SELECT COUNT(*) FROM paw WHERE post.id = paw.post_id)'), 'paw_count']
         ],
         include: [
           {
@@ -47,12 +47,9 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    post_url: {
+    content: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isURL: true
-      }
+      allowNull: false
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -79,7 +76,7 @@ module.exports = Post;
 
 // //CREATE POST MODEL
 // class Post extends Model {
-//   static upvote(body, models) {
+//   static uppaw(body, models) {
 //     return models.Paws.create({
 //       user_id: body.user_id,
 //       post_id: body.post_id

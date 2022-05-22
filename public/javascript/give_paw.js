@@ -1,9 +1,9 @@
-async function upvoteClickHandler(event) {
+async function give_pawClickHandler(event) {
     event.preventDefault();
     const id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
       ];
-      const response = await fetch('/api/posts/upvote', {
+      const response = await fetch('/api/posts/give_paw', {
         method: 'PUT',
         body: JSON.stringify({
           post_id: id
@@ -20,4 +20,4 @@ async function upvoteClickHandler(event) {
       }
   }
   
-  document.querySelector('.upvote-btn').addEventListener('click', upvoteClickHandler);
+  document.querySelector('.give_paw-btn').addEventListener('click', give_pawClickHandler);

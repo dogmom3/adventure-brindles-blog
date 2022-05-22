@@ -1,6 +1,6 @@
-const { Vote } = require('../models');
+const { Paw } = require('../models');
 
-const votedata = [
+const pawdata = [
   {
     user_id: 1,
     post_id: 1
@@ -67,6 +67,6 @@ const votedata = [
   },
 ];
 
-const seedVotes = () => Vote.bulkCreate(votedata);
+const seedPaws = () => Paw.bulkCreate(pawdata);
 
-module.exports = seedVotes;
+module.exports = seedPaws;

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Comment, Vote } = require('../models');
+const { Post, User, Comment, Paw } = require('../models');
 
 //GET ALL POSTS
 router.get('/', (req, res) => {
@@ -8,10 +8,10 @@ router.get('/', (req, res) => {
   Post.findAll({
     attributes: [
       'id',
-      'post_url',
+      'content',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM paw WHERE post.id = paw.post_id)'), 'paw_count']
     ],
     include: [
       {
@@ -50,10 +50,10 @@ router.get('/post/:id', (req, res) => {
     },
     attributes: [
       'id',
-      'post_url',
+      'content',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM paw WHERE post.id = paw.post_id)'), 'paw_count']
     ],
     include: [
       {
@@ -111,7 +111,7 @@ module.exports = router;
 //   Post.findAll({
 //     attributes: [
 //       "id",
-//       "post_url",
+//       "content",
 //       "title",
 //       "created_at",
 //       [sequelize.literal(
@@ -158,7 +158,7 @@ module.exports = router;
 //     },
 //     attributes: [
 //       "id",
-//       "post_url",
+//       "content",
 //       "title",
 //       "created_at",
 //       [

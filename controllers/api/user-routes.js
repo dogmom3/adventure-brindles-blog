@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Post, Comment, Vote } = require('../../models');
+const { User, Post, Comment, Paw } = require('../../models');
 
 //GET ALL USERS
 router.get('/', (req, res) => {
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Post,
-        attributes: ['id', 'title', 'post_url', 'created_at']
+        attributes: ['id', 'title', 'content', 'created_at']
       },
       {
         model: Comment,
@@ -35,8 +35,8 @@ router.get('/:id', (req, res) => {
       {
         model: Post,
         attributes: ['title'],
-        through: Vote,
-        as: 'voted_posts'
+        through: Paw,
+        as: 'pawed_posts'
       }
     ]
   })
@@ -54,7 +54,6 @@ router.get('/:id', (req, res) => {
 });
 //CREATE POST
 router.post('/', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
   User.create({
     username: req.body.username,
     email: req.body.email,
@@ -76,7 +75,6 @@ router.post('/', (req, res) => {
 });
 //LOG IN USER
 router.post('/login', (req, res) => {
-  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
   User.findOne({
     where: {
       email: req.body.email
@@ -86,14 +84,11 @@ router.post('/login', (req, res) => {
       res.status(400).json({ message: 'No user with that email address!' });
       return;
     }
-
     const validPassword = dbUserData.checkPassword(req.body.password);
-
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
-
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
@@ -116,9 +111,6 @@ router.post('/logout', (req, res) => {
 });
 //UPDATE USER
 router.put('/:id', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
-
-  // pass in req.body instead to only update what's passed through
   User.update(req.body, {
     individualHooks: true,
     where: {
@@ -185,7 +177,7 @@ module.exports = router;
 //     },
 //     include: [
 //       { model: Post, 
-//         attributes: ["id", "title", "post_url", "created_at"] 
+//         attributes: ["id", "title", "content", "created_at"] 
 //       },
 //       {
 //         model: Comment,

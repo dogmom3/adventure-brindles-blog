@@ -1,4 +1,4 @@
-<section>
+{{!-- <section>
   <h2>Create New Post</h2>
    <form class="new-post-form">
     <div>
@@ -15,11 +15,12 @@
     </div> --}}
     <button type="submit" class="btn">Create</button>
   </form>
-</section> 
+</section>  --}}
 
-{{#if posts.length}}
 <section>
   <h2>Your Posts</h2>
+{{#if posts.length}}
+
   <ol>
     {{#each posts as |post|}}
     <li>
@@ -28,7 +29,9 @@
     </li>
     {{/each}}
   </ol>
-</section>
+  {{else}}
+<h3>You have not posted any content yet</h3>
 {{/if}}
-
+<a href="/dashboard/add-post"><button class='button is-info m-2'>Add a New Post</button></a>
+</section>
 <script src="/javascript/add-post.js"></script>
