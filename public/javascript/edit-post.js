@@ -5,10 +5,11 @@ async function editFormHandler(event) {
     const id = window.location.toString().split('/')[
       window.location.toString().split('/').length - 1
     ];
+    if (title && contents) {
     const response = await fetch(`/api/posts/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        title
+        title, content
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -21,6 +22,6 @@ async function editFormHandler(event) {
       alert(response.statusText);
     }
   }
-  
+}
   document.querySelector('.edit-post-form').addEventListener('submit', editFormHandler);
   

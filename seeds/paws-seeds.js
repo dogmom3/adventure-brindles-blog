@@ -1,6 +1,6 @@
-const { Paws } = require('../models');
+const { Paw } = require('../models');
 
-const pawsdata = [
+const pawdata = [
   {
     user_id: 1,
     post_id: 1
@@ -21,7 +21,6 @@ const pawsdata = [
     user_id: 1,
     post_id: 5
   },
-
   {
     user_id: 2,
     post_id: 1
@@ -42,7 +41,6 @@ const pawsdata = [
     user_id: 2,
     post_id: 5
   },
-
   {
     user_id: 3,
     post_id: 2
@@ -51,7 +49,6 @@ const pawsdata = [
     user_id: 3,
     post_id: 3
   },
-
   {
     user_id: 4,
     post_id: 1
@@ -60,7 +57,6 @@ const pawsdata = [
     user_id: 4,
     post_id: 2
   },
-
   {
     user_id: 5,
     post_id: 4
@@ -71,6 +67,6 @@ const pawsdata = [
   },
 ];
 
-const seedPaws = () => Paws.bulkCreate(pawsdata);
+const seedPaws = () => Paw.bulkCreate(pawdata);
 
 module.exports = seedPaws;
