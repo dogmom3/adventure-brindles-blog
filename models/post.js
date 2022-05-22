@@ -1,10 +1,10 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
 //CREATE POST MODEL
 class Post extends Model {
   static upvote(body, models) {
-    return models.Paws.create({
+    return models.Vote.create({
       user_id: body.user_id,
       post_id: body.post_id
     }).then(() => {
@@ -17,8 +17,7 @@ class Post extends Model {
           'post_url',
           'title',
           'created_at',
-          [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'),
-            'paws_count']
+          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         include: [
           {
@@ -35,19 +34,18 @@ class Post extends Model {
   }
 }
 
-//CREATE FIELDS FOR POST MODEL
+//CREATE COLUMNS FOR POST MODEL
 Post.init(
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
-      // primaryKey: true,
+      allowNull: false
     },
     post_url: {
       type: DataTypes.STRING,
@@ -59,22 +57,100 @@ Post.init(
     user_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: "user",
-        key: "id",
-      },
-    },
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false,
-   
+        model: 'user',
+        key: 'id'
+      }
     }
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "post",
+    modelName: 'post'
   }
 );
 
 module.exports = Post;
+
+
+
+// const { Model, DataTypes } = require("sequelize");
+// const sequelize = require("../config/connection");
+
+// //CREATE POST MODEL
+// class Post extends Model {
+//   static upvote(body, models) {
+//     return models.Paws.create({
+//       user_id: body.user_id,
+//       post_id: body.post_id
+//     }).then(() => {
+//       return Post.findOne({
+//         where: {
+//           id: body.post_id
+//         },
+//         attributes: [
+//           'id',
+//           'post_url',
+//           'title',
+//           'created_at',
+//           [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'),
+//             'paws_count']
+//         ],
+//         include: [
+//           {
+//             model: models.Comment,
+//             attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+//             include: {
+//               model: models.User,
+//               attributes: ['username']
+//             }
+//           }
+//         ]
+//       });
+//     });
+//   }
+// }
+
+// //CREATE FIELDS FOR POST MODEL
+// Post.init(
+//   {
+//     id: {
+//       type: DataTypes.INTEGER,
+//       allowNull: false,
+//       primaryKey: true,
+//       autoIncrement: true,
+//     },
+//     title: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       // primaryKey: true,
+//     },
+//     post_url: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       validate: {
+//         isURL: true
+//       }
+//     },
+//     user_id: {
+//       type: DataTypes.INTEGER,
+//       references: {
+//         model: "user",
+//         key: "id",
+//       },
+//     },
+//     content: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+   
+//     }
+//   },
+//   {
+//     sequelize,
+//     freezeTableName: true,
+//     underscored: true,
+//     modelName: "post",
+//   }
+// );
+
+// module.exports = Post;

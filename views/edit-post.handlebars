@@ -5,9 +5,14 @@
   </h2>
   <form class="edit-post-form">
     <div>
+      <label for="post-title">Title:</label>
       <input name="post-title" type="text" value="{{post.title}}" />
       <span>({{format_url post.post_url}})</span>
     </div>
+    {{!-- <div>
+      <label for="content">Content:</label>
+      <input class="textarea" name="content" value='{{post.content}}' />
+    </div> --}}
     <div>
       {{post.paws_count}} {{format_plural "paws" post.paws_count}} by you on {{format_date post.created_at}}
       |

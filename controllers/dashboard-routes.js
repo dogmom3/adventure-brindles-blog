@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Comment, Paws } = require('../models');
+const { Post, User, Comment, Vote } = require('../models');
 const withAuth = require('../utils/auth');
 
-//GET ALL POSTS FOR DASHBOARD
+//GET ALL POSTS
 router.get('/', withAuth, (req, res) => {
   console.log(req.session);
-  console.log('=====');
+  console.log('======================');
   Post.findAll({
     where: {
       user_id: req.session.user_id
@@ -16,7 +16,7 @@ router.get('/', withAuth, (req, res) => {
       'post_url',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'), 'paws_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -42,7 +42,6 @@ router.get('/', withAuth, (req, res) => {
       res.status(500).json(err);
     });
 });
-
 //GET POST BY ID
 router.get('/edit/:id', withAuth, (req, res) => {
   Post.findByPk(req.params.id, {
@@ -51,7 +50,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
       'post_url',
       'title',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'), 'paws_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -86,3 +85,94 @@ router.get('/edit/:id', withAuth, (req, res) => {
 });
 
 module.exports = router;
+
+
+
+// const router = require('express').Router();
+// const sequelize = require('../config/connection');
+// const { Post, User, Comment, Paws } = require('../models');
+// const withAuth = require('../utils/auth');
+
+// //GET ALL POSTS FOR DASHBOARD
+// router.get('/', withAuth, (req, res) => {
+//   console.log(req.session);
+//   console.log('=====');
+//   Post.findAll({
+//     where: {
+//       user_id: req.session.user_id
+//     },
+//     attributes: [
+//       'id',
+//       'post_url',
+//       'title',
+//       'created_at',
+//       [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'), 'paws_count']
+//     ],
+//     include: [
+//       {
+//         model: Comment,
+//         attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+//         include: {
+//           model: User,
+//           attributes: ['username']
+//         }
+//       },
+//       {
+//         model: User,
+//         attributes: ['username']
+//       }
+//     ]
+//   })
+//     .then(dbPostData => {
+//       const posts = dbPostData.map(post => post.get({ plain: true }));
+//       res.render('dashboard', { posts, loggedIn: true });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
+
+// //GET POST BY ID
+// router.get('/edit/:id', withAuth, (req, res) => {
+//   Post.findByPk(req.params.id, {
+//     attributes: [
+//       'id',
+//       'post_url',
+//       'title',
+//       'created_at',
+//       [sequelize.literal('(SELECT COUNT(*) FROM paws WHERE post.id = paws.post_id)'), 'paws_count']
+//     ],
+//     include: [
+//       {
+//         model: Comment,
+//         attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+//         include: {
+//           model: User,
+//           attributes: ['username']
+//         }
+//       },
+//       {
+//         model: User,
+//         attributes: ['username']
+//       }
+//     ]
+//   })
+//     .then(dbPostData => {
+//       if (dbPostData) {
+//         const post = dbPostData.get({ plain: true });
+        
+//         res.render('edit-post', {
+//           post,
+//           loggedIn: true
+//         });
+//       } else {
+//         res.status(404).end();
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json(err);
+//     });
+// });
+
+// module.exports = router;
