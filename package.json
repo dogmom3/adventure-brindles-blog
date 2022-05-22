@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "jest"
+    "test": "jest",
+    "seed": "node seeds/"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +17,6 @@
     "express": "^4.17.3",
     "express-handlebars": "^6.0.5",
     "express-session": "^1.17.3",
-    "heroku": "^7.60.2",
     "mysql2": "^2.3.3",
     "sequelize": "^6.18.0"
   },
