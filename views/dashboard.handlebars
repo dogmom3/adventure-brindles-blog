@@ -1,4 +1,4 @@
-{{!-- <section>
+<section>
   <h2>Create New Post</h2>
    <form class="new-post-form">
     <div>
@@ -6,26 +6,21 @@
       <input type="text" id="post-title" name="post-title" />
     </div>
     <div>
-      <label for="post-url">Link</label>
-      <input id="post-url" name="post-url" />
-    </div>
-    {{!-- <div>
       <label for="content">Content</label>
-      <input id="text" name="content" />
-    </div> --}}
+      <input id="content" name="content" />
+    </div>
     <button type="submit" class="btn">Create</button>
   </form>
-</section>  --}}
+</section> 
 
+{{#if posts.length}}
 <section>
   <h2>Your Posts</h2>
-{{#if posts.length}}
-
   <ol>
     {{#each posts as |post|}}
     <li>
       {{> post-info post}}
-      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+      <a href="/dashboard/edit-post/{{post.id}}" class="edit-link">Edit post</a>
     </li>
     {{/each}}
   </ol>
