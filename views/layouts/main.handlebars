@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -6,32 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Adventure Brindles Blog</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
   </head>
 
   <body>
     <div class="wrapper">
       <header>
-        <h1>
-          <a href="/">ADVENTURE BRINDLES BLOG</a>
-        </h1>
+        <h1 class="is-size-1 has-text-weight-bold">ADVENTURE BRINDLES BLOG</h1>
         <nav>
+
+          <button class='btn'>
+            <a class="is-size-5 has-text-white has-text-weight-bold" href="/">HOME</a>
+          </button>
+
           {{#if loggedIn}}
-           <a href="/dashboard">MY DASHBOARD</a>
-        <button id="logout" class="btn-no-style">LOGOUT</button>
-        {{else}}
-        <a href="/login">LOGIN</a>
-        {{/if}}
+          
+            <button class='btn'>
+              <a class="is-size-5 has-text-white has-text-weight-bold" href="/dashboard">MY DASHBOARD</a>
+            </button>
+
+            <button class='btn is-size-5 has-text-white has-text-weight-bold' id="logout">LOGOUT</button>
+
+          {{else}}
+            <a class="is-size-5 has-text-white has-text-weight-bold" href="/login">LOGIN</a>
+          {{/if}}
         </nav>
       </header>
       <main>
         {{{body}}}
       </main>
-      <footer>
-        Thanks for visiting! Arf! Arf!
+      <footer class="is-size-4 has-text-white has-text-weight-bold">
+        Thanks for visiting! Arf! Arf! 
       </footer>
     </div>
     {{#if loggedIn}}
-    <script src="/javascript/logout.js"></script>
+      <script src="/javascript/logout.js"></script>
     {{/if}}
-</body>
+  </body>
 </html>

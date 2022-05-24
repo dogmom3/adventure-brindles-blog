@@ -1,22 +1,21 @@
 <article class="post">
+<div class="title-info is-size-5 has-text-weight-bold">
   <div class="title">
-    <a href="/post/{{id}}">{{title}}</a>
-    {{!-- <span>({{format_url post_url}})</span> --}}
+    <button class="btn title-btn">
+    <a class="is-capitalized is-size-5 has-text-white has-text-weight-bold" href="/post/{{id}}">{{title}}</a>
+</button>
   </div>
-
-  <div>
-<p> {{content}}</p>
-  </div>
-
-  <div class="meta">
-Posted by {{user.username}} on {{format_date created_at}}
+  
+  <div class="meta is-capitalized">
+    Posted by {{user.username}} on {{format_date created_at}}
     {{!-- {{paw_count}} {{format_plural "paw" paw_count}} by {{user.username}} on {{format_date created_at}} --}}
     |
-    <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+    <a href="/post/{{id}}">{{comments.length}}
+      {{format_plural "comment" comments.length}}</a>
+  </div>
+</div>
+  <div>
+    <p class="is-capitalized is-size-4 has-text-weight-bold"> {{content}}</p>
   </div>
 
 </article>
-    
-    {{!-- <a href="/post/{{id}}" >{{title}}</a> --}}
-
-

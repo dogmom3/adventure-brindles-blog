@@ -1,7 +1,7 @@
 const seedUsers = require('./user-seeds');
 const seedPosts = require('./post-seeds');
 const seedComments = require('./comment-seeds');
-const seedPaws = require('./paw-seeds');
+// const seedPaws = require('./paw-seeds');
 
 const sequelize = require('../config/connection');
 
