@@ -81,6 +81,11 @@ footer {
   padding: 1%;
 }
 
+.comment-body{
+min-width: 20vw;
+height: 10vh;
+font-size: 25px;
+}
 
 .comment {
   padding: 1%;

@@ -15,12 +15,14 @@
        {{!-- <textarea name="comment-body" class="is-capitalized is-size-4"value='{{post.content}}'></textarea> --}}
       <input class="textarea is-capitalized is-size-4" name="content" value='{{post.content}}' />
     </div>
-    <div class="is-capitalized is-size-4 has-text-weight-bold">
+    {{!-- <div class="is-capitalized is-size-4 has-text-weight-bold"> --}}
       {{!-- {{post.paw_count}} {{format_plural "paw" post.paw_count}} by you on {{format_date post.created_at}} --}}
-     Posted by {{user.username}} on {{format_date created_at}}
-      |
-      <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a>
-    </div>
+     {{!-- Posted by {{user.username}} on {{format_date created_at}} --}}
+    
+      {{!-- | --}}
+      {{!-- <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a> --}}
+    {{!-- </div> --}}
+     
     <button type="submit" class="btn is-size-5 has-text-white has-text-weight-bold">Save post</button>
     <button type="button" class="delete-post-btn btn is-size-5 has-text-white has-text-weight-bold">Delete post</button>
   </form>
@@ -28,7 +30,7 @@
 
 <form class="comment-form">
   <div>
-    <textarea name="comment-body" class=" "></textarea>
+    <textarea name="comment-body" class="comment-body"></textarea>
   </div>
 
   <div>
