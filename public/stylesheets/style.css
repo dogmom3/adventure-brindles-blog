@@ -1,13 +1,14 @@
-* {
-  box-sizing: border-box;
-}
-
-body, html {
-  height: 100%;
-  padding: 0;
-  margin: 0;
+html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-image: radial-gradient(yellow, goldenrod, magenta);
+}
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -30,6 +31,11 @@ nav {
   justify-content: space-between;
 }
 
+main {
+  flex: 1;
+  padding: 2% 4%;
+}
+
 .btn {
   background-color: rebeccapurple;
   margin:10px;
@@ -41,26 +47,8 @@ nav {
   background-color:mediumorchid;
 }
 
-form > div {
-  margin-bottom: 2%;
-}
-
 form label {
   display: block;
-}
-
-.wrapper {
-  width: 100%;
-  min-height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex: 1;
-  padding: 2% 4%;
 }
 
  .post {
@@ -84,7 +72,6 @@ main {
 .title-btn {
   min-width: 100%;
   padding: 10px;
-
 }
 
 footer {
@@ -95,28 +82,6 @@ footer {
 }
 
 
-
-/* .post-list {
-  margin: 0;
-  padding: 0;
-} */
-
-textarea,
-input {
-  padding: 0.5%;
-  border-radius: 5px;
-}
-
-textarea {
-  min-width: 40%;
-  min-height: 100px;
-}  
-
-.edit-link {
-  display: block;
-  margin: -1.5% 0 2% 0;
-}
-
 .comment {
   padding: 1%;
   margin-bottom: 1%;
@@ -124,4 +89,16 @@ textarea {
 
 .comment:nth-child(odd) {
   background-color:orchid;
+}
+
+.login-form, .signup-form {
+  border-style: ridge;
+  border-radius: 5px;
+  border-width: 3px;
+  border-color: black;
+  margin-bottom:10px;
+  padding:10px;
+  width:fit-content;
+  text-align: center;
+  align-items: center;
 }

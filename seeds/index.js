@@ -14,8 +14,8 @@ const seedAll = async () => {
   console.log('--------------');
   await seedComments();
   console.log('--------------');
-  await seedPaws();
-  console.log('--------------');
+  // await seedPaws();
+  // console.log('--------------');
   process.exit(0);
 };
 
