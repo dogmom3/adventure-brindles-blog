@@ -115,6 +115,7 @@ router.put("/give_paw", withAuth, (req, res) => {
 });
 //UPDATE POST CONTENT
 router.put("/:id", withAuth, (req, res) => {
+  console.log('save')
   Post.update(
     {
       title: req.body.title,

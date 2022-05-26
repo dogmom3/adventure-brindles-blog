@@ -1,5 +1,4 @@
 # Adventure Brindles Blog
-  ![github license]()
 
   ## Deployed Link on Heroku:
  https://adventure-brindles-blog.herokuapp.com/
@@ -9,18 +8,12 @@
   
   ## Table of Contents
   * [Usage](#usage)
-  * [License](#license)
   * [Contributing](#contributing)
   * [Screenshots](#screenshots)
 
  
   ## Usage
-Visit the website at the link below, sign up for an accoun, and begin posting and viewing blogs.
-
-  ## License
-  ![github license]()
-
-  This project is covered under the MIT license
+Visit the website at the link below, sign up for an account, and begin posting and viewing blogs.
   
   ## Contributing
   My name is Blair Seivers and I can be reached for any questions on this project by email at
@@ -28,5 +21,8 @@ Visit the website at the link below, sign up for an accoun, and begin posting an
   You can view my other projects on GitHub here: https://github.com/dogmom3
   
   ## Screenshots
-  ![App Image]()
+  ![App Image](./public/images/homepage.png)
+  ![App Image](./public/images/login.png)
+  ![App Image](./public/images/dashboard.png)
+
  
