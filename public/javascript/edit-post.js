@@ -24,6 +24,8 @@ async function editFormHandler(event) {
   
     if (response.ok) {
       document.location.replace('/dashboard/');
+      console.log('save btn')
+
     } else {
       alert(response.statusText);
     }
